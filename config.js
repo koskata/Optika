@@ -7,6 +7,6 @@
    но пази всичко само на устройството.
    ============================================================ */
 window.APP_CONFIG = {
-  supabaseUrl: "idqmhbiaguuadxaxivzv",      // напр. "https://abcdefghijkl.supabase.co"
+  supabaseUrl: "https://idqmhbiaguuadxaxivzv.supabase.co",      // напр. "https://abcdefghijkl.supabase.co"
   supabaseAnonKey: "sb_publishable_1FJKYVtWsQ3XOtYmKaerkw_IX0vNrqR"   // дългият публичен ключ "anon / publishable"
 };
