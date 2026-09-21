@@ -115,16 +115,16 @@ body{padding-bottom:calc(86px + env(safe-area-inset-bottom, 0px))}
   backdrop-filter:saturate(1.6) blur(18px); border-top:1px solid var(--line);
 }
 .tabbar button{
-  position:relative; flex:1; max-width:96px; min-width:0; display:flex; flex-direction:column; align-items:center; gap:3px;
-  padding:8px 2px 6px; border-radius:13px; color:var(--ink-3); font-size:9.8px; font-weight:600; letter-spacing:0;
+  position:relative; flex:1; max-width:80px; min-width:0; display:flex; flex-direction:column; align-items:center; gap:3px;
+  padding:8px 1px 6px; border-radius:12px; color:var(--ink-3); font-size:9.2px; font-weight:600; letter-spacing:-.01em;
   transition:color .2s, background .25s, transform .14s;
 }
 .tabbar button:active{transform:scale(.93)}
-.tabbar button svg{width:21px; height:21px; transition:transform .3s cubic-bezier(.3,1.5,.5,1)}
+.tabbar button svg{width:20px; height:20px; transition:transform .3s cubic-bezier(.3,1.5,.5,1)}
 .tabbar button.on{color:#fff; background:var(--grad); box-shadow:var(--glow)}
 .tabbar button.on svg{transform:translateY(-1px) scale(1.06)}
 .tabbar button span{max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
-.tabbar .badge{position:absolute; top:3px; right:calc(50% - 19px); min-width:17px; height:17px; padding:0 4px;
+.tabbar .badge{position:absolute; top:2px; right:calc(50% - 17px); min-width:17px; height:17px; padding:0 4px;
   border-radius:9px; background:var(--rose); color:#fff; font-size:10px; font-weight:700; display:grid; place-items:center; line-height:1;
   box-shadow:0 0 0 2px var(--paper)}
 .tabbar button.on .badge{box-shadow:none; background:#fff; color:var(--accent-ink)}
@@ -227,15 +227,10 @@ body{padding-bottom:calc(86px + env(safe-area-inset-bottom, 0px))}
 .barline b{color:var(--ink-2); font-weight:600}
 
 /* ===== stat strip ===== */
-.stats{display:grid; grid-template-columns:repeat(2,1fr); border:1px solid var(--line); border-radius:var(--r);
+.stats{display:flex; flex-wrap:wrap; border:1px solid var(--line); border-radius:var(--r);
   overflow:hidden; background:var(--surface); box-shadow:var(--shadow)}
-@media (min-width:620px){ .stats{grid-template-columns:repeat(4,1fr)} }
-.stat{padding:13px 14px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); display:flex; flex-direction:column; gap:7px}
-.stat:nth-child(2n){border-right:none}
-.stat:nth-child(n+3){border-bottom:none}
-@media (min-width:620px){
-  .stat{border-bottom:none} .stat:nth-child(2n){border-right:1px solid var(--line)} .stat:last-child{border-right:none}
-}
+.stat{flex:1 1 150px; padding:13px 14px; border-right:1px solid var(--line); display:flex; flex-direction:column; gap:7px}
+.stat:last-child{border-right:none}
 .stat .top{display:flex; align-items:baseline; gap:5px}
 .stat b{font-family:"Unbounded","Onest",sans-serif; font-size:22px; font-weight:600; letter-spacing:-.045em; line-height:1}
 .stat .of{font-size:12px; color:var(--ink-3); font-weight:500}
@@ -293,6 +288,8 @@ body{padding-bottom:calc(86px + env(safe-area-inset-bottom, 0px))}
 .subj-top{display:flex; gap:11px; align-items:flex-start}
 .subj-top h3{font-size:15px; line-height:1.28; word-break:break-word}
 .subj-top .who{display:block; font-size:12.5px; color:var(--ink-3); margin-top:2px}
+.where{display:flex; align-items:center; gap:5px; font-size:12px; color:var(--ink-3); margin-top:4px; line-height:1.3}
+.where svg{width:12px; height:12px; flex:none; opacity:.85}
 .chips{display:flex; flex-wrap:wrap; gap:5px}
 .subj-foot{display:flex; gap:12px; font-size:12px; color:var(--ink-3); border-top:1px solid var(--line); padding-top:9px; margin-top:auto}
 .miniring{flex:none; position:relative; width:44px; height:44px}
@@ -457,6 +454,38 @@ body{padding-bottom:calc(86px + env(safe-area-inset-bottom, 0px))}
 .dayacts{display:flex; gap:8px; margin-top:14px; flex-wrap:wrap}
 .dayacts .btn{flex:1; min-width:140px; padding:10px 14px; font-size:13.5px}
 
+/* ===== програма ===== */
+@media (max-width:359px){ .tabbar button span{display:none} .tabbar button{padding:10px 2px} }
+.les{position:relative; display:flex; gap:12px; width:100%; text-align:left; padding:11px 13px 11px 16px; overflow:hidden;
+  background:var(--surface); border:1px solid var(--line); border-radius:13px;
+  transition:transform .16s, box-shadow .2s}
+.les::before{content:""; position:absolute; left:0; top:0; bottom:0; width:4px;
+  background:hsl(var(--sh,258) var(--sc-sat-dot) var(--sc-dot))}
+.les:hover{transform:translateY(-1px); box-shadow:var(--shadow-lift)}
+.les:active{transform:scale(.99)}
+.les .lt{flex:none; width:50px; display:flex; flex-direction:column; gap:1px}
+.les .lt b{font-size:14px; font-weight:700; letter-spacing:-.025em; line-height:1.2}
+.les .lt i{font-style:normal; font-size:11.5px; color:var(--ink-3); line-height:1.2}
+.les .lb{flex:1; min-width:0; display:flex; flex-direction:column; gap:5px}
+.les .ln{font-size:14.5px; font-weight:600; line-height:1.3; word-break:break-word}
+.les .lm{display:flex; flex-wrap:wrap; gap:5px; align-items:center}
+.les.off{opacity:.62; border-style:dashed; box-shadow:none}
+.les.off .ln{text-decoration:line-through; text-decoration-thickness:1.5px}
+.les.now{border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft)}
+.wkdays{display:grid; gap:12px}
+@media (min-width:760px){ .wkdays{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1060px){ .wkdays{grid-template-columns:repeat(3,1fr)} }
+.wkday{padding:13px; border-radius:var(--r); background:var(--surface); border:1px solid var(--line); box-shadow:var(--shadow)}
+.wkday.isnow{border-color:var(--accent)}
+.wkday .wh{display:flex; align-items:baseline; gap:8px; margin-bottom:10px}
+.wkday .wh b{font-size:13.5px; font-weight:700; text-transform:capitalize}
+.wkday .wh span{font-size:11.5px; color:var(--ink-3)}
+.wkday .wh .tot{margin-left:auto; font-size:11px; color:var(--ink-3)}
+.wkday .stack{gap:7px}
+.wkday .empt{font-size:12.5px; color:var(--ink-3)}
+.daynav{display:flex; align-items:center; gap:8px; margin-bottom:12px}
+.daynav .mtitle b{font-size:16px}
+
 /* ===== статус на синхронизацията ===== */
 .iconbtn.sync{position:relative}
 .iconbtn.sync::after{content:""; position:absolute; right:4px; bottom:4px; width:8px; height:8px; border-radius:99px;
@@ -499,7 +528,7 @@ body{padding-bottom:calc(86px + env(safe-area-inset-bottom, 0px))}
 }
 .fld{display:flex; flex-direction:column; gap:6px}
 .fld>span{font-size:11.5px; font-weight:700; color:var(--ink-2); letter-spacing:.05em; text-transform:uppercase}
-.fld input[type=text], .fld input[type=date], .fld input[type=email], .fld input[type=password], .fld select, .fld textarea{
+.fld input[type=text], .fld input[type=date], .fld input[type=time], .fld input[type=email], .fld input[type=password], .fld select, .fld textarea{
   width:100%; padding:11px 13px; border-radius:12px; border:1.5px solid var(--line-strong); background:var(--surface-2);
   font-size:15px; outline:none; resize:vertical; transition:border-color .18s, background .18s, box-shadow .18s}
 .fld input:focus, .fld select:focus, .fld textarea:focus{border-color:var(--accent); background:var(--surface); box-shadow:0 0 0 3px var(--accent-soft)}
@@ -560,9 +589,10 @@ body{padding-bottom:calc(86px + env(safe-area-inset-bottom, 0px))}
 "use strict";
 
 /* ========== състояние ========== */
-const S = { subjects:{}, tasks:{}, notes:{}, events:{}, meta:{} };
+const S = { subjects:{}, tasks:{}, notes:{}, events:{}, lessons:{}, meta:{} };
+const COLLS = ["subjects","tasks","notes","events","lessons"];
 const ui = { view:"today", subjectId:null, taskFilter:"open", search:"", noteSubject:"", subjSort:"name",
-  hideBanner:false, calMonth:null, calDay:null };
+  hideBanner:false, calMonth:null, calDay:null, progDate:null, progView:"day" };
 let saveNotice = "";
 
 const HUES = [258, 176, 209, 340, 28, 150, 288, 196];
@@ -576,6 +606,9 @@ const WD_SHORT = ["нд","пн","вт","ср","чт","пт","сб"];
 const MONTHS_FULL = ["януари","февруари","март","април","май","юни","юли","август","септември","октомври","ноември","декември"];
 const CAL_WD = ["пн","вт","ср","чт","пт","сб","нд"];
 const EVENT_KINDS = ["Няма университет","Събитие","Бележка"];
+const LESSON_KINDS = ["Лекция","Упражнение","Учебна практика","Семинар","Спорт","Друго"];
+const KIND_SHORT = { "Лекция":"лекция", "Упражнение":"упражнение", "Учебна практика":"уч. практика",
+  "Семинар":"семинар", "Спорт":"спорт", "Друго":"" };
 
 const uid = () => Math.random().toString(36).slice(2,10) + Date.now().toString(36).slice(-4);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -612,7 +645,20 @@ function initials(name){
   return w.length ? (w[0][0] + (w[1] ? w[1][0] : "")).toUpperCase() : "?";
 }
 
+const roomLabel = r => /^\d/.test(String(r).trim()) ? "зала " + r : r;
+function whereBits(s){
+  const b = [];
+  if (s.building) b.push(s.building);
+  if (s.room) b.push(roomLabel(s.room));
+  if (s.floor) b.push("ет. " + s.floor);
+  return b;
+}
 const subjectsAll = () => Object.values(S.subjects);
+const mins = t => { const x = String(t || "").split(":"); return (+x[0] || 0) * 60 + (+x[1] || 0); };
+const lessonsOn = iso => Object.values(S.lessons).filter(l => l.date === iso)
+  .sort((a,b) => mins(a.start) - mins(b.start));
+const shiftISO = (iso, n) => { const d = parseISO(iso); d.setDate(d.getDate() + n); return key(d); };
+const mondayOf = iso => { const d = parseISO(iso); return shiftISO(iso, -((d.getDay() + 6) % 7)); };
 const subjectsSorted = () => {
   const l = subjectsAll();
   if (ui.subjSort === "ready") return l.sort((a,b) => konPct(b) - konPct(a));
@@ -642,20 +688,6 @@ function semester(){
   const gone = clamp(Math.round((now-a)/86400000), 0, span);
   return { start, end, pct: Math.round(gone/span*100), week: Math.floor(gone/7)+1, weeks: Math.ceil(span/7), left: Math.max(0, span-gone) };
 }
-function activity(){
-  const m = {};
-  const bump = ts => { if (!ts) return; const d = new Date(ts); if (isNaN(d)) return; const k = key(d); m[k] = (m[k]||0)+1; };
-  Object.values(S.tasks).forEach(t => { if (t.done) bump(t.completedAt); });
-  subjectsAll().forEach(s => (s.konspekt||[]).forEach(k => { if (k.done) bump(k.at); }));
-  return m;
-}
-function streak(){
-  const m = activity(), d = new Date();
-  let n = 0;
-  if (!m[key(d)]) d.setDate(d.getDate()-1);
-  while (m[key(d)]){ n++; d.setDate(d.getDate()-1); }
-  return n;
-}
 
 /* ========== запис, синхронизация, профил ========== */
 const CFG = window.APP_CONFIG || {};
@@ -668,7 +700,7 @@ function localLoad(){
   try{
     const p = JSON.parse(localStorage.getItem(LSKEY) || "null");
     if (!p) return false;
-    ["subjects","tasks","notes","events"].forEach(c => { S[c] = p[c] || {}; });
+    COLLS.forEach(c => { S[c] = p[c] || {}; });
     S.meta = p.meta || {};
     return true;
   }catch(e){ return false; }
@@ -754,12 +786,29 @@ function applyRows(rows){
   });
   if (changed){ localSave(); render(); }
 }
+/* Примерните записи живеят само на устройството. Щом акаунтът има истински данни,
+   тези, които не са пипани, се махат, за да не се дублират между устройствата. */
+function purgeSamples(remoteIds){
+  let changed = false;
+  COLLS.forEach(c => {
+    Object.keys(S[c]).forEach(id => {
+      const o = S[c][id];
+      if (o && o.sample && !remoteIds.has(c + ":" + id)){ delete S[c][id]; changed = true; }
+    });
+  });
+  if (changed) localSave();
+  return changed;
+}
 async function pullAll(){
   if (!supa || !session) return;
   setSync("syncing");
   try{
     const { data, error } = await supa.from("items").select("*");
     if (error) throw error;
+    if (data && data.length){
+      const remote = new Set(data.filter(r => !r.deleted).map(r => r.id));
+      if (purgeSamples(remote)) render();
+    }
     applyRows(data);
   }catch(e){ setSync("error"); return; }
   await flush();
@@ -776,7 +825,11 @@ function subscribeRealtime(){
 async function initSync(){
   if (!CFG.supabaseUrl || !CFG.supabaseAnonKey){ setSync("off"); return; }
   if (!window.supabase || !window.supabase.createClient){ setSync("error"); return; }
-  supa = window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey);
+  // прощава, ако в config.js е сложено само Project ID вместо целия адрес
+  let url = String(CFG.supabaseUrl).trim().replace(/\/+$/, "");
+  if (!/^https?:\/\//.test(url)) url = "https://" + url + (url.includes(".") ? "" : ".supabase.co");
+  try{ supa = window.supabase.createClient(url, CFG.supabaseAnonKey); }
+  catch(e){ setSync("error"); return; }
   try{
     const { data } = await supa.auth.getSession();
     session = (data && data.session) || null;
@@ -824,13 +877,17 @@ const SEED = [
   ["s7","Технология на очната оптика",288,["Лекции","Упражнения","Учебна практика"]],
   ["s8","Информатика",196,["Упражнения"]]
 ];
+const SEED_FLAG = "optika.seeded.v1";
+const putLocal = (coll, obj) => { obj.updatedAt = 1; S[coll][obj.id] = obj; };
 function seedIfEmpty(){
-  if (S.meta.seeded) return;
-  if (Object.keys(S.subjects).length || Object.keys(S.notes).length){ putMeta({ seeded:true }); return; }
-  SEED.forEach(x => put("subjects", { id:x[0], name:x[1], teacher:"", hue:x[2], kinds:x[3],
-    materials:[], materialsNote:"", exam:{ form:"", date:"", material:"" }, konspekt:[], konFiles:[], sample:true }));
-  put("subjects", { id:"s4", name:"Геометрична оптика", teacher:"", hue:340, kinds:["Лекции","Упражнения"],
-    materials:["Собствена тетрадка","Презентации от лектора"], materialsNote:"",
+  try{ if (localStorage.getItem(SEED_FLAG)) return; }catch(e){ return; }
+  const mark = () => { try{ localStorage.setItem(SEED_FLAG, "1"); }catch(e){} };
+  if (Object.keys(S.subjects).length || Object.keys(S.notes).length){ mark(); return; }
+  SEED.forEach(x => putLocal("subjects", { id:x[0], name:x[1], teacher:"", building:"", room:"", floor:"",
+    hue:x[2], kinds:x[3], materials:[], materialsNote:"", exam:{ form:"", date:"", material:"" },
+    konspekt:[], konFiles:[], sample:true }));
+  putLocal("subjects", { id:"s4", name:"Геометрична оптика", teacher:"", building:"", room:"", floor:"",
+    hue:340, kinds:["Лекции","Упражнения"], materials:["Собствена тетрадка","Презентации от лектора"], materialsNote:"",
     exam:{ form:"Тест + устен", date:"", material:"целият конспект" },
     konspekt:[
       { t:"Праволинейно разпространение на светлината", done:false, at:null },
@@ -839,10 +896,10 @@ function seedIfEmpty(){
       { t:"Тънки лещи — формула и оптична сила", done:false, at:null },
       { t:"Пречупваща сила и диоптър", done:false, at:null }
     ], konFiles:[], sample:true });
-  put("notes", { id:"n1", title:"Лекция 1 — обвивки на окото", subjectId:"s2",
+  putLocal("notes", { id:"n1", title:"Лекция 1 — обвивки на окото", subjectId:"s2",
     body:"Три обвивки:\n1. Външна — роговица + склера\n2. Средна (съдова) — ирис, ресничесто тяло, хориоидея\n3. Вътрешна — ретина\n\nТака изглежда една записка. Натисни я, за да я редактираш.",
     files:[], sample:true });
-  putMeta({ seeded:true });
+  localSave(); mark(); render();
 }
 
 /* ========== икони ========== */
@@ -850,6 +907,8 @@ const I = {
   check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5.2 5.2L20 6.5"/></svg>',
   plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
   back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 5.5L8 12l6.5 6.5"/></svg>',
+  clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.6"/><path d="M12 7.4V12l3.1 2"/></svg>',
+  pin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>',
   pen:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16.2 4.3l3.5 3.5M4 20l4.3-.9L19.3 8.1a1.6 1.6 0 0 0 0-2.3l-1.1-1.1a1.6 1.6 0 0 0-2.3 0L4.9 15.7 4 20z"/></svg>',
   search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>',
   home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5L12 4l8 6.5V19a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 19v-8.5z"/><path d="M9.5 20.5v-6h5v6"/></svg>',
@@ -1004,6 +1063,7 @@ const isFreeDay = iso => eventsOn(iso).some(e => e.kind === "Няма униве
 /* ========== табове ========== */
 const TABS = [
   { id:"today", label:"Днес", icon:I.home },
+  { id:"schedule", label:"Програма", icon:I.clock },
   { id:"subjects", label:"Предмети", icon:I.book },
   { id:"tasks", label:"Задачи", icon:I.list },
   { id:"notes", label:"Записки", icon:I.note },
@@ -1053,7 +1113,6 @@ function viewToday(){
   const week = open.filter(t => { const d = daysUntil(t.due); return d !== null && d >= 0 && d <= 7; }).sort((a,b) => a.due.localeCompare(b.due));
   const noDate = open.filter(t => !t.due);
   const allT = Object.values(S.tasks), doneT = allT.filter(t => t.done).length;
-  const st = streak();
   const name = (S.meta && S.meta.name) ? S.meta.name.split(" ")[0] : "";
 
   let head, sub;
@@ -1086,7 +1145,6 @@ function viewToday(){
       <div class="hero-legend">
         <span class="leg"><i style="background:linear-gradient(135deg,#9C7BFF,#5FE3CE)"></i>конспект <b>${kon.pct}%</b></span>
         <span class="leg"><i style="background:rgba(255,255,255,.4)"></i>семестър <b>${sem.pct}%</b></span>
-        ${st ? `<span class="leg"><i style="background:#F2A03E"></i>серия <b>${st} дн.</b></span>` : ""}
       </div>
     </div>
     <div class="dial">
@@ -1105,13 +1163,18 @@ function viewToday(){
     </div>
   </section>`;
 
+  const todayLs = lessonsOn(todayISO());
+  if (todayLs.length){
+    const act = todayLs.filter(l => !l.cancelled);
+    html += `<section class="sec"><div class="sec-head"><p class="eyebrow">Днешна програма</p>
+      ${act.length ? `<span class="pill accent">${esc(act[0].start)} – ${esc(act[act.length-1].end)}</span>` : ""}
+      <button class="linkbtn" data-act="tab" data-tab="schedule">Цялата програма</button></div>
+      <div class="stack">${todayLs.map(l => lessonRow(l)).join("")}</div></section>`;
+  }
+
   html += `<section class="sec"><div class="stats">
     <div class="stat"><div class="top">${numSVG("t-done", doneT)}<span class="of">/ ${allT.length}</span></div>
       <span class="lbl">задачи готови</span>${barSVG("t-done", allT.length ? Math.round(doneT/allT.length*100) : 0, "teal")}</div>
-    <div class="stat"><div class="top">${numSVG("k-done", kon.done)}<span class="of">/ ${kon.total}</span></div>
-      <span class="lbl">въпроса научени</span>${barSVG("k-done", kon.pct)}</div>
-    <div class="stat"><div class="top">${numSVG("streak", st)}<span class="of">дни</span></div>
-      <span class="lbl">серия</span>${barSVG("streak", clamp(st*14,0,100), "teal")}</div>
     <div class="stat"><div class="top">${numSVG("semleft", sem.left)}<span class="of">дни</span></div>
       <span class="lbl">до края</span>${barSVG("semleft", sem.pct)}</div>
   </div></section>`;
@@ -1171,7 +1234,8 @@ function subjectCard(s){
   return `<button class="subj" data-act="open-subject" data-id="${s.id}" style="--sh:${s.hue}">
     <span class="subj-top">
       <span class="glyph">${esc(initials(s.name))}</span>
-      <span style="flex:1; min-width:0"><h3>${esc(s.name)}</h3>${s.teacher?`<span class="who">${esc(s.teacher)}</span>`:""}</span>
+      <span style="flex:1; min-width:0"><h3>${esc(s.name)}</h3>${s.teacher?`<span class="who">${esc(s.teacher)}</span>`:""}${
+        whereBits(s).length ? `<span class="where">${I.pin}${esc(whereBits(s).join(" · "))}</span>` : ""}</span>
       ${kon.length ? `<span class="miniring"><svg viewBox="-24 -24 48 48">${ringSVG("sk-"+s.id, pct, 19, 5, `hsl(${s.hue} 64% 52%)`)}</svg><span class="v">${pct}%</span></span>` : ""}
     </span>
     ${chips ? `<span class="chips">${chips}</span>` : ""}
@@ -1205,7 +1269,6 @@ function viewSubjects(){
       <div class="dstat">${numSVG("s-count", list.length)}<span>предмета</span></div>
       <div class="dstat">${numSVG("s-kon", list.filter(s => (s.konspekt||[]).length).length)}<span>с конспект</span></div>
       <div class="dstat">${numSVG("s-ex", list.filter(s => s.exam && s.exam.date).length)}<span>с дата за изпит</span></div>
-      <div class="dstat">${numSVG("s-prac", list.filter(s => (s.kinds||[]).indexOf("Учебна практика") > -1).length)}<span>с практика</span></div>
     </div></section>`;
   html += `<section class="sec"><div class="segs">
     ${[["name","По име"],["ready","По готовност"],["exam","По изпит"]].map(([v,l]) =>
@@ -1234,6 +1297,7 @@ function viewSubject(){
       <div style="flex:1; min-width:0">
         <h1>${esc(s.name)}</h1>
         <p class="who">${s.teacher ? esc(s.teacher) : "Преподавателят не е попълнен"}</p>
+        ${whereBits(s).length ? `<p class="where">${I.pin}${esc(whereBits(s).join(" · "))}</p>` : ""}
       </div>
       <button class="iconbtn" data-act="edit-subject" data-id="${s.id}" aria-label="Промени предмета">${I.pen}</button>
     </div>
@@ -1247,6 +1311,13 @@ function viewSubject(){
       ${exDays !== null && exDays >= 0 ? `<div class="dstat">${numSVG("d-ex", exDays)}<span>дни до изпит</span></div>` : ""}
     </div>
   </div></section>`;
+
+  html += `<section class="sec"><div class="sec-head"><p class="eyebrow">Къде са часовете</p></div>
+    <div class="panel" style="padding:14px"><dl class="kv">
+      <dt>Сграда</dt><dd>${esc(s.building || "—")}</dd>
+      <dt>Зала</dt><dd>${esc(s.room || "—")}</dd>
+      <dt>Етаж</dt><dd>${esc(s.floor || "—")}</dd>
+    </dl></div></section>`;
 
   html += `<section class="sec"><div class="sec-head"><p class="eyebrow">Изпит</p></div>
     <div class="panel" style="padding:14px"><dl class="kv">
@@ -1373,6 +1444,85 @@ function viewNotes(){
 }
 
 
+/* ========== изглед: Програма ========== */
+function lessonRow(l, showDate){
+  const su = S.subjects[l.subjectId];
+  const now = new Date();
+  const isNow = !l.cancelled && l.date === todayISO()
+    && mins(l.start) <= now.getHours()*60 + now.getMinutes()
+    && now.getHours()*60 + now.getMinutes() < mins(l.end);
+  const room = l.room || (su && su.room) || "";
+  const bld  = l.building || (su && su.building) || "";
+  const bits = [];
+  if (l.kind && KIND_SHORT[l.kind]) bits.push(`<span class="pill">${esc(KIND_SHORT[l.kind])}</span>`);
+  if (room) bits.push(`<span class="pill accent">${esc(roomLabel(room))}</span>`);
+  if (bld) bits.push(`<span class="pill">${esc(bld)}</span>`);
+  if (l.groups) bits.push(`<span class="pill">гр. ${esc(l.groups)}</span>`);
+  if (l.cancelled) bits.push(`<span class="pill rose">отменен</span>`);
+  if (showDate) bits.push(`<span class="pill">${esc(fmtDate(l.date))}</span>`);
+  return `<button class="les ${l.cancelled?"off":""} ${isNow?"now":""}" data-act="edit-lesson" data-id="${l.id}"
+      style="--sh:${su ? su.hue : 258}">
+    <span class="lt"><b>${esc(l.start||"")}</b><i>${esc(l.end||"")}</i></span>
+    <span class="lb">
+      <span class="ln">${esc(su ? su.name : (l.title || "Час"))}</span>
+      ${bits.length ? `<span class="lm">${bits.join("")}</span>` : ""}
+      ${l.note ? `<span class="task-note">${esc(l.note)}</span>` : ""}
+    </span>
+  </button>`;
+}
+
+function viewSchedule(){
+  const sel = ui.progDate || todayISO();
+  const tk = todayISO();
+  const week = ui.progView === "week";
+  const mon = mondayOf(sel);
+
+  let html = `<section>
+    <div class="segs">
+      ${[["day","Ден"],["week","Седмица"]].map(([v,l]) =>
+        `<button data-act="prog-view" data-v="${v}" class="${ui.progView===v?"on":""}">${l}</button>`).join("")}
+    </div>
+    <div class="daynav">
+      <button class="mnav" data-act="prog-prev" aria-label="Назад">${I.chevL}</button>
+      <div class="mtitle">${week
+        ? `<b>${fmtDate(mon)} – ${fmtDate(shiftISO(mon,6))}</b><span>${parseISO(mon).getFullYear()}</span>`
+        : `<b>${esc(WEEKDAYS[parseISO(sel).getDay()])}, ${parseISO(sel).getDate()} ${MONTHS_FULL[parseISO(sel).getMonth()]}</b><span>${sel===tk?"ДНЕС":esc(fmtDay(sel)).toUpperCase()}</span>`}</div>
+      <button class="mnav" data-act="prog-next" aria-label="Напред">${I.chevR}</button>
+      <button class="mnav" data-act="prog-today" aria-label="Към днес" title="Към днес">${I.cal}</button>
+    </div>`;
+
+  if (!week){
+    const ls = lessonsOn(sel), hol = holidayOn(sel), free = eventsOn(sel).filter(e => e.kind === "Няма университет");
+    if (hol || free.length){
+      html += `<div class="dnote ${hol?"rose":"amber"}">${I.cal}<div><b>Няма университет</b>
+        <span>${esc(hol ? hol.name : (free[0].title || free[0].kind))}</span></div></div>`;
+    }
+    const active = ls.filter(l => !l.cancelled);
+    html += `<div class="sec-head" style="margin-bottom:10px"><p class="eyebrow">Часове</p>
+      <span class="pill ${active.length?"accent":""}">${active.length}</span>
+      ${active.length ? `<span class="pill">${esc(active[0].start)} – ${esc(active[active.length-1].end)}</span>` : ""}</div>`;
+    html += ls.length ? `<div class="stack">${ls.map(l => lessonRow(l)).join("")}</div>`
+      : `<div class="empty"><b>Няма часове за този ден</b>Ако програмата се промени, добави час с бутона отдолу.</div>`;
+  } else {
+    html += `<div class="wkdays">`;
+    for (let i = 0; i < 7; i++){
+      const d = shiftISO(mon, i), ls = lessonsOn(d);
+      const hol = holidayOn(d), free = eventsOn(d).some(e => e.kind === "Няма университет");
+      html += `<div class="wkday ${d===tk?"isnow":""}">
+        <div class="wh"><b>${esc(WEEKDAYS[parseISO(d).getDay()])}</b><span>${esc(fmtDate(d))}</span>
+          ${ls.length ? `<span class="tot">${ls.filter(l=>!l.cancelled).length} ч.</span>` : ""}</div>
+        ${ls.length ? `<div class="stack">${ls.map(l => lessonRow(l)).join("")}</div>`
+          : `<p class="empt">${hol ? esc(hol.name) : free ? "няма университет" : "свободно"}</p>`}
+      </div>`;
+    }
+    html += `</div>`;
+  }
+
+  html += `<div style="margin-top:14px"><button class="btn wide" data-act="new-lesson" data-d="${week?mon:sel}">${I.plus} Добави час</button></div>
+  </section>`;
+  return html;
+}
+
 /* ========== изглед: Календар ========== */
 function eventMark(kind){ return kind === "Няма университет" ? "amber" : kind === "Бележка" ? "" : "grad"; }
 
@@ -1430,11 +1580,18 @@ function viewCalendar(){
   const doneN = tasks.filter(t => t.done).length;
   const pct = tasks.length ? Math.round(doneN / tasks.length * 100) : 0;
 
+  const dayLs = lessonsOn(sel);
   let inner = "";
   if (hol || free.length){
     inner += `<div class="dnote ${hol ? "rose" : "amber"}">${I.cal}<div>
       <b>${hol && hol.kind === "official" ? "Официален празник" : "Няма университет"}</b>
       <span>${esc(hol ? hol.name : (free[0].title || free[0].kind))}</span></div></div>`;
+  }
+
+  if (dayLs.length){
+    inner += `<div class="dsec"><div class="sec-head" style="margin-bottom:9px"><p class="eyebrow">Часове</p>
+      <span class="pill accent">${dayLs.filter(l=>!l.cancelled).length}</span></div>
+      <div class="stack">${dayLs.map(l => lessonRow(l)).join("")}</div></div>`;
   }
 
   inner += `<div class="dsec">
@@ -1494,14 +1651,16 @@ function render(){
   const caret = keepId && "selectionStart" in act ? act.selectionStart : null;
 
   const view = document.getElementById("view");
-  const k = ui.view + ":" + (ui.subjectId || "") + ":" + (ui.view === "calendar" ? (ui.calMonth || "") : "");
+  const k = ui.view + ":" + (ui.subjectId || "") + ":" + (ui.view === "calendar" ? (ui.calMonth || "") : "")
+    + ":" + (ui.view === "schedule" ? ui.progView : "");
   const fresh = k !== lastKey; lastKey = k;
 
   const body = ui.view === "today" ? viewToday()
     : ui.view === "subjects" ? viewSubjects()
     : ui.view === "subject" ? viewSubject()
     : ui.view === "tasks" ? viewTasks()
-    : ui.view === "calendar" ? viewCalendar() : viewNotes();
+    : ui.view === "calendar" ? viewCalendar()
+    : ui.view === "schedule" ? viewSchedule() : viewNotes();
   const notice = saveNotice ? `<section><div class="banner" style="background:var(--rose-soft); color:var(--rose)">
     <div><b>Внимание</b>${esc(saveNotice)}</div><button data-act="dismiss-notice">Скрий</button></div></section>` : "";
 
@@ -1528,6 +1687,7 @@ function fieldHTML(f){
   if (f.type === "select") return `<label class="fld">${lab}<select id="${id}">${f.options.map(o =>
     `<option value="${esc(o.v)}"${o.v === (f.value||"") ? " selected":""}>${esc(o.l)}</option>`).join("")}</select>${hint}</label>`;
   if (f.type === "date") return `<label class="fld">${lab}<input type="date" id="${id}" value="${esc(f.value||"")}">${hint}</label>`;
+  if (f.type === "time") return `<label class="fld">${lab}<input type="time" id="${id}" value="${esc(f.value||"")}" step="300">${hint}</label>`;
   if (f.type === "multi") return `<div class="fld">${lab}<div class="chipset" id="${id}">${f.options.map(o =>
     `<button type="button" class="chip-t${(f.value||[]).indexOf(o) > -1 ? " on":""}" data-v="${esc(o)}">${esc(o)}</button>`).join("")}</div>${hint}</div>`;
   if (f.type === "hue") return `<div class="fld">${lab}<div class="hues" id="${id}">${HUES.map(h =>
@@ -1603,11 +1763,15 @@ function parseKon(text, prev){
 
 function subjectSheet(s){
   const isNew = !s;
-  s = s || { id:uid(), name:"", teacher:"", hue:HUES[Object.keys(S.subjects).length % HUES.length],
+  s = s || { id:uid(), name:"", teacher:"", building:"", room:"", floor:"",
+    hue:HUES[Object.keys(S.subjects).length % HUES.length],
     kinds:["Лекции"], materials:[], materialsNote:"", exam:{}, konspekt:[] };
   const fields = [
     { key:"name", label:"Предмет", value:s.name, placeholder:"напр. Анатомия и физиология на окото" },
     { key:"teacher", label:"Преподавател", value:s.teacher, placeholder:"напр. доц. д-р Иванова" },
+    { key:"building", label:"Сграда", value:s.building, placeholder:"напр. Медицински колеж, бл. 2" },
+    { key:"room", label:"Зала / кабинет", value:s.room, placeholder:"напр. 312 или „Аудитория А“" },
+    { key:"floor", label:"Етаж", value:s.floor, placeholder:"напр. 3 или партер" },
     { key:"kinds", type:"multi", label:"Вид занятия", options:KINDS, value:s.kinds||[] },
     { key:"materials", type:"multi", label:"Какво ползваш", options:MATERIALS, value:s.materials||[] },
     { key:"materialsNote", type:"textarea", rows:3, label:"Точно кои материали", value:s.materialsNote,
@@ -1625,7 +1789,8 @@ function subjectSheet(s){
     fields, onDelete: isNew ? null : () => { drop("subjects", s.id); ui.view = "subjects"; },
     onSubmit(v){
       if (!v.name) return false;
-      put("subjects", { id:s.id, name:v.name, teacher:v.teacher, hue:v.hue, kinds:v.kinds, materials:v.materials,
+      put("subjects", { id:s.id, name:v.name, teacher:v.teacher,
+        building:v.building, room:v.room, floor:v.floor, hue:v.hue, kinds:v.kinds, materials:v.materials,
         materialsNote:v.materialsNote, exam:{ form:v.examForm, date:v.examDate, material:v.examMaterial },
         konspekt:s.konspekt||[], konFiles:s.konFiles||[] });
     }
@@ -1711,6 +1876,29 @@ function settingsSheet(){
 }
 
 /* ---------------- профил и резервно копие ---------------- */
+/* Внася цяло копие наведнъж: един запис в паметта, една заявка към облака. */
+function importBackup(p){
+  const now = Date.now(), rows = [];
+  let n = 0;
+  COLLS.forEach(c => {
+    Object.values(p[c] || {}).forEach(o => {
+      if (!o || !o.id) return;
+      o.updatedAt = now;
+      S[c][o.id] = o;
+      rows.push({ id: c + ":" + o.id, kind:c, data:o, updated_at:now, deleted:false });
+      n++;
+    });
+  });
+  if (p.meta){
+    S.meta = Object.assign({}, S.meta, p.meta, { updatedAt: now });
+    rows.push({ id:"meta:settings", kind:"meta", data:S.meta, updated_at:now, deleted:false });
+  }
+  localSave();
+  outWrite(outRead().filter(r => !rows.some(x => x.id === r.id)).concat(rows));
+  render();
+  if (supa && session){ setSync("syncing"); flush().then(() => pullAll()).catch(() => {}); }
+  return n;
+}
 function exportBackup(){
   try{
     const blob = new Blob([JSON.stringify(S, null, 2)], { type:"application/json" });
@@ -1773,6 +1961,67 @@ function accountSheet(){
       <input type="file" accept="application/json,.json" hidden id="impfile"></label>
     <button class="btn danger wide" data-act="auth-signout">Излез</button>` });
 }
+function lessonSheet(l, presetDate){
+  const isNew = !l;
+  const orig = l ? { subjectId:l.subjectId, kind:l.kind, wd: parseISO(l.date).getDay() } : null;
+  l = l || { id:uid(), subjectId:"", date: presetDate || ui.progDate || todayISO(),
+    start:"08:00", end:"09:30", kind:"Лекция", room:"", building:"", teacher:"", groups:"", note:"", cancelled:false };
+  const su = S.subjects[l.subjectId];
+  const ph = (own, dflt) => own ? "" : (dflt ? "по подразбиране: " + dflt : "");
+  const fields = [
+    { key:"subjectId", type:"select", label:"Предмет", options:subjectOptions(), value:l.subjectId },
+    { key:"date", type:"date", label:"Дата", value:l.date },
+    { key:"start", type:"time", label:"От", value:l.start },
+    { key:"end", type:"time", label:"До", value:l.end },
+    { key:"kind", type:"select", label:"Вид", options:LESSON_KINDS.map(v => ({v, l:v})), value:l.kind },
+    { key:"room", label:"Зала", value:l.room, placeholder: ph(l.room, su && su.room) || "напр. 312" },
+    { key:"building", label:"Сграда", value:l.building, placeholder: ph(l.building, su && su.building) },
+    { key:"teacher", label:"Преподавател", value:l.teacher, placeholder: ph(l.teacher, su && su.teacher) },
+    { key:"groups", label:"Групи", value:l.groups, placeholder:"напр. 1, 2" },
+    { key:"note", type:"textarea", rows:2, label:"Бележка", value:l.note, placeholder:"напр. носи тетрадката от упражненията" },
+    { key:"cancelled", type:"select", label:"Състояние", value: l.cancelled ? "1" : "",
+      options:[{ v:"", l:"Нормален" }, { v:"1", l:"Отменен — остава зачертан" }] }
+  ];
+  if (isNew){
+    fields.push({ key:"repeat", type:"select", label:"Повторение", value:"",
+      options:[{ v:"", l:"Само веднъж" }, { v:"w", l:"Всяка седмица" }] });
+    fields.push({ key:"until", type:"date", label:"Повтаряй до", value:"",
+      hint:"Попълва се само ако си избрала седмично повторение." });
+  } else {
+    fields.push({ key:"scope", type:"select", label:"Приложи промяната", value:"one",
+      options:[{ v:"one", l:"Само за този час" }, { v:"next", l:"За този и всички следващи еднакви" }],
+      hint:"„Еднакви“ значи същия предмет, същия вид и същия ден от седмицата." });
+  }
+  openSheet({
+    title: isNew ? "Нов час" : "Часът",
+    subtitle: su ? su.name : "",
+    fields,
+    onDelete: isNew ? null : () => drop("lessons", l.id),
+    onSubmit(v){
+      if (!v.subjectId || !v.date || !v.start || !v.end) return false;
+      const base = { subjectId:v.subjectId, start:v.start, end:v.end, kind:v.kind, room:v.room,
+        building:v.building, teacher:v.teacher, groups:v.groups, note:v.note, cancelled: v.cancelled === "1" };
+      put("lessons", Object.assign({ id:l.id, date:v.date }, base));
+      if (isNew && v.repeat === "w" && v.until){
+        let d = shiftISO(v.date, 7), guard = 0;
+        while (d <= v.until && guard++ < 80){
+          put("lessons", Object.assign({ id:uid(), date:d }, base));
+          d = shiftISO(d, 7);
+        }
+      }
+      if (!isNew && v.scope === "next" && orig){
+        Object.values(S.lessons).forEach(x => {
+          if (x.id === l.id || x.date < v.date) return;
+          if (x.subjectId !== orig.subjectId || x.kind !== orig.kind) return;
+          if (parseISO(x.date).getDay() !== orig.wd) return;
+          put("lessons", Object.assign({}, x, { start:v.start, end:v.end, kind:v.kind,
+            room:v.room, building:v.building, teacher:v.teacher, groups:v.groups }));
+        });
+      }
+      ui.progDate = v.date;
+    }
+  });
+}
 function eventSheet(e, presetDate){
   const isNew = !e;
   e = e || { id:uid(), date: presetDate || ui.calDay || todayISO(), title:"", kind:"Няма университет", note:"" };
@@ -1799,6 +2048,7 @@ function quickAdd(){
     <button data-act="new-task"><span class="glyph">${I.list}</span><span><b>Задача</b><span>домашно, реферат, протокол, тест</span></span></button>
     <button data-act="new-note"><span class="glyph">${I.note}</span><span><b>Записка</b><span>от лекция или упражнение</span></span></button>
     <button data-act="new-subject"><span class="glyph">${I.book}</span><span><b>Предмет</b><span>с конспект, материали и изпит</span></span></button>
+    <button data-act="new-lesson"><span class="glyph">${I.clock}</span><span><b>Час в програмата</b><span>единично или всяка седмица</span></span></button>
     <button data-act="new-event"><span class="glyph">${I.cal}</span><span><b>Събитие в календара</b><span>почивен ден или бележка за дата</span></span></button>
   </div>` });
 }
@@ -1881,6 +2131,14 @@ document.addEventListener("click", e => {
       Object.values(S.events).filter(e => e.sample).forEach(e => drop("events", e.id));
       ui.hideBanner = true; render();
       break;
+    case "prog-view": ui.progView = el.dataset.v; render(); break;
+    case "prog-prev": case "prog-next": {
+      const step = (ui.progView === "week" ? 7 : 1) * (a === "prog-next" ? 1 : -1);
+      ui.progDate = shiftISO(ui.progDate || todayISO(), step); render(); break;
+    }
+    case "prog-today": ui.progDate = todayISO(); render(); break;
+    case "new-lesson": { const d = el.dataset.d || ""; closeSheet(); lessonSheet(null, d); break; }
+    case "edit-lesson": lessonSheet(S.lessons[id]); break;
     case "cal-day": ui.calDay = el.dataset.d; ui.calMonth = el.dataset.d.slice(0,7); render(); break;
     case "cal-prev": case "cal-next": {
       const cm = ui.calMonth || todayISO().slice(0,7);
@@ -1941,12 +2199,9 @@ document.addEventListener("change", e => {
   const fr = new FileReader();
   fr.onload = () => {
     try{
-      const p = JSON.parse(fr.result);
-      ["subjects","tasks","notes","events"].forEach(c => {
-        Object.values(p[c] || {}).forEach(o => { if (o && o.id) put(c, o); });
-      });
-      if (p.meta) putMeta(Object.assign({}, p.meta, { seeded:true }));
+      const n = importBackup(JSON.parse(fr.result));
       closeSheet();
+      alert("Внесени са " + n + " записа.");
     }catch(err){ alert("Файлът не изглежда като резервно копие."); }
   };
   fr.readAsText(inp.files[0]);

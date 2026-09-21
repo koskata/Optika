@@ -1,5 +1,5 @@
 /* Service worker: държи приложението достъпно и без интернет. */
-const CACHE = "optika-v1";
+const CACHE = "optika-v5";
 const SHELL = ["./", "./index.html", "./config.js", "./manifest.webmanifest",
   "./icons/icon-192.png", "./icons/icon-512.png", "./icons/apple-touch-icon.png"];
 
