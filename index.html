@@ -499,6 +499,9 @@ body{padding-bottom:calc(86px + env(safe-area-inset-bottom, 0px))}
 .authnote b{color:var(--ink)}
 .authrow{display:flex; gap:9px}
 .authrow .btn{flex:1}
+.pwrow{position:relative; display:block}
+.pwrow input{padding-right:44px !important}
+.pwrow .rowbtn{position:absolute; right:6px; top:50%; transform:translateY(-50%)}
 
 /* ===== confetti ===== */
 #burst{position:fixed; inset:0; pointer-events:none; z-index:90; overflow:hidden}
@@ -834,8 +837,9 @@ async function initSync(){
     const { data } = await supa.auth.getSession();
     session = (data && data.session) || null;
   }catch(e){ session = null; }
-  supa.auth.onAuthStateChange((_e, sess) => {
+  supa.auth.onAuthStateChange((ev, sess) => {
     session = sess || null;
+    if (ev === "PASSWORD_RECOVERY"){ newPasswordSheet(); return; }
     if (session){ pullAll(); subscribeRealtime(); } else { setSync("local"); }
     render();
   });
@@ -1912,7 +1916,7 @@ function exportBackup(){
 async function doAuth(mode){
   const em = document.getElementById("au_email"), pw = document.getElementById("au_pass"), err = document.getElementById("au_err");
   const show = m => { if (err){ err.textContent = m; err.hidden = !m; } };
-  const email = ((em && em.value) || "").trim(), pass = (pw && pw.value) || "";
+  const email = ((em && em.value) || "").trim().toLowerCase(), pass = (pw && pw.value) || "";
   show("");
   if (!email || pass.length < 6){ show("Въведи имейл и парола от поне 6 знака."); return; }
   try{
@@ -1927,6 +1931,46 @@ async function doAuth(mode){
     await flush(); await pullAll(); subscribeRealtime(); render();
   }catch(e){ show((e && e.message) ? e.message : "Не се получи. Опитай пак."); }
 }
+async function doReset(){
+  const em = document.getElementById("au_email"), err = document.getElementById("au_err");
+  const show = m => { if (err){ err.textContent = m; err.hidden = !m; } };
+  const email = ((em && em.value) || "").trim().toLowerCase();
+  if (!email){ show("Напиши имейла си в полето отгоре и натисни пак."); return; }
+  if (!supa){ show("Синхронизацията не е настроена."); return; }
+  show("Изпращаме…");
+  try{
+    const { error } = await supa.auth.resetPasswordForEmail(email,
+      { redirectTo: location.origin + location.pathname });
+    if (error) throw error;
+    show("Изпратен е линк на " + email + ". Отвори го от това устройство и ще те пусне да смениш паролата. Виж и в спам.");
+  }catch(e){ show((e && e.message) ? e.message : "Не се получи. Опитай пак след минута."); }
+}
+function newPasswordSheet(){
+  openSheet({ title:"Нова парола", focus:false, subtitle:"Линкът е валиден — избери нова парола.", html:`
+    <div class="fld"><span>Нова парола</span><span class="pwrow">
+      <input type="password" id="np_pass" autocomplete="new-password" autocapitalize="none"
+        autocorrect="off" spellcheck="false" placeholder="поне 6 знака">
+      <button type="button" class="rowbtn" data-act="pw-toggle" data-for="np_pass" aria-label="Покажи паролата">${I.eye}</button>
+    </span></div>
+    <p class="fileerr" id="np_err" hidden></p>
+    <button class="btn wide" data-act="set-password">Запази новата парола</button>
+    <p class="authnote">Запиши си я някъде — ще трябва и на другото устройство.</p>` });
+}
+async function setNewPassword(){
+  const pw = document.getElementById("np_pass"), err = document.getElementById("np_err");
+  const show = m => { if (err){ err.textContent = m; err.hidden = !m; } };
+  const v = (pw && pw.value) || "";
+  if (v.length < 6){ show("Паролата трябва да е поне 6 знака."); return; }
+  if (!supa){ show("Синхронизацията не е настроена."); return; }
+  show("Запазваме…");
+  try{
+    const { error } = await supa.auth.updateUser({ password: v });
+    if (error) throw error;
+    closeSheet();
+    await pullAll(); subscribeRealtime(); render();
+    alert("Паролата е сменена и вече си влязла.");
+  }catch(e){ show((e && e.message) ? e.message : "Не се получи."); }
+}
 function accountSheet(){
   if (!CFG.supabaseUrl || !CFG.supabaseAnonKey){
     openSheet({ title:"Синхронизация", focus:false, html:`
@@ -1935,20 +1979,27 @@ function accountSheet(){
       <b>config.js</b> — адресът на Supabase проекта и публичният ключ.</p>
       <button class="btn quiet wide" data-act="export">Свали резервно копие</button>
       <label class="fileadd">${I.clip}<span>Възстанови от копие</span>
-        <input type="file" accept="application/json,.json" hidden id="impfile"></label>` });
+        <input type="file" hidden id="impfile"></label>` });
     return;
   }
   if (!session){
     openSheet({ title:"Влез в профила си", focus:false,
       subtitle:"С имейл и парола. Не ти трябва никакъв друг акаунт.", html:`
-      <label class="fld"><span>Имейл</span><input type="email" id="au_email" autocomplete="email" placeholder="ime@example.com"></label>
-      <label class="fld"><span>Парола</span><input type="password" id="au_pass" autocomplete="current-password" placeholder="поне 6 знака"></label>
+      <label class="fld"><span>Имейл</span><input type="email" id="au_email" autocomplete="username"
+        autocapitalize="none" autocorrect="off" spellcheck="false" inputmode="email" placeholder="ime@example.com"></label>
+      <div class="fld"><span>Парола</span><span class="pwrow">
+        <input type="password" id="au_pass" autocomplete="current-password" autocapitalize="none"
+          autocorrect="off" spellcheck="false" placeholder="поне 6 знака">
+        <button type="button" class="rowbtn" data-act="pw-toggle" data-for="au_pass" aria-label="Покажи паролата">${I.eye}</button>
+      </span></div>
       <p class="fileerr" id="au_err" hidden></p>
       <div class="authrow">
         <button class="btn sec" data-act="auth-signup">Регистрация</button>
         <button class="btn" data-act="auth-signin">Влез</button>
       </div>
-      <p class="authnote">Първия път натисни <b>Регистрация</b>. Всичко, което вече е записано тук, се качва автоматично след влизане.</p>` });
+      <button class="btn quiet wide" data-act="auth-reset">Забравена парола</button>
+      <p class="authnote">Първия път натисни <b>Регистрация</b>. Забравена парола праща линк на имейла —
+      отвори го от <b>същото</b> устройство и приложение.</p>` });
     return;
   }
   const pend = outRead().length;
@@ -1958,7 +2009,7 @@ function accountSheet(){
     <button class="btn quiet wide" data-act="sync-now">Синхронизирай сега</button>
     <button class="btn quiet wide" data-act="export">Свали резервно копие</button>
     <label class="fileadd">${I.clip}<span>Възстанови от копие</span>
-      <input type="file" accept="application/json,.json" hidden id="impfile"></label>
+      <input type="file" hidden id="impfile"></label>
     <button class="btn danger wide" data-act="auth-signout">Излез</button>` });
 }
 function lessonSheet(l, presetDate){
@@ -2077,6 +2128,13 @@ document.addEventListener("click", e => {
     case "account": accountSheet(); break;
     case "auth-signin": doAuth("in"); break;
     case "auth-signup": doAuth("up"); break;
+    case "auth-reset": doReset(); break;
+    case "set-password": setNewPassword(); break;
+    case "pw-toggle": {
+      const f = document.getElementById(el.dataset.for);
+      if (f) f.type = f.type === "password" ? "text" : "password";
+      break;
+    }
     case "auth-signout":
       closeSheet();
       if (supa) supa.auth.signOut().catch(() => {});
