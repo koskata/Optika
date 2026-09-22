@@ -602,7 +602,7 @@ const HUES = [258, 176, 209, 340, 28, 150, 288, 196];
 const KINDS = ["Лекции","Упражнения","Учебна практика","Семинари"];
 const MATERIALS = ["Купен учебник","Собствена тетрадка","Презентации от лектора","Ксерокопия","Онлайн ресурси","Атлас"];
 const EXAM_FORMS = ["","Тест","Писмен изпит","Устен изпит","Практически изпит","Тест + устен","Текуща оценка","Колоквиум"];
-const TASK_KINDS = ["Домашно","Реферат","Протокол","Тест","Колоквиум","Изпит","Друго"];
+const TASK_KINDS = ["Домашно","Да науча","Реферат","Презентация","Протокол","Тест","Изпит","Друго"];
 const MONTHS = ["яну","фев","март","апр","май","юни","юли","авг","сеп","окт","ное","дек"];
 const WEEKDAYS = ["неделя","понеделник","вторник","сряда","четвъртък","петък","събота"];
 const WD_SHORT = ["нд","пн","вт","ср","чт","пт","сб"];
@@ -1809,7 +1809,8 @@ function taskSheet(t, preset, due){
       { key:"title", label:"Какво трябва да се направи", value:t.title, placeholder:"напр. Реферат върху рефракция на окото" },
       { key:"subjectId", type:"select", label:"Предмет", options:subjectOptions(), value:t.subjectId },
       { key:"due", type:"date", label:"За кога", value:t.due },
-      { key:"kind", type:"select", label:"Вид", options:TASK_KINDS.map(v => ({v,l:v})), value:t.kind },
+      { key:"kind", type:"select", label:"Вид", value:t.kind,
+        options:(TASK_KINDS.indexOf(t.kind) > -1 || !t.kind ? TASK_KINDS : TASK_KINDS.concat([t.kind])).map(v => ({v,l:v})) },
       { key:"details", type:"textarea", rows:3, label:"Подробности", value:t.details,
         placeholder:"напр. 5 страници, по учебника стр. 40–62; предава се на ръка" },
       { key:"files", type:"files", label:"Файлове", value:t.files||[],
